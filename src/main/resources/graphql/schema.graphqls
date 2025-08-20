@@ -1,0 +1,57 @@
+# --- schema.graphqls ---
+
+# --- Types ---
+type Customer {
+  customerId: ID!
+  name: String!
+  email: String!
+  orders: [Order]
+}
+
+type Order {
+  orderId: ID!
+  customerId: Customer
+  items: [OrderItem!]!
+  totalAmount: Float
+  status: String
+  createdAt: String
+}
+
+
+
+type OrderItem {
+  itemId: ID!
+  productId: String!
+  quantity: Int!
+  price: Float!
+}
+
+# --- Inputs ---
+input OrderItemInput {
+  productId: String!
+  quantity: Int!
+  price: Float!
+}
+
+input OrderInput {
+  customerId: ID!
+  items: [OrderItemInput!]!
+}
+
+input CustomerInput {
+  name: String!
+  email: String!
+}
+
+# --- Queries ---
+type Query {
+  getOrder(orderId: ID!): Order
+  getOrdersByCustomer(customerId: ID!): [Order]
+  getCustomer(customerId: ID!): Customer
+}
+
+# --- Mutations ---
+type Mutation {
+  createOrder(input: OrderInput!): Order
+  createCustomer(input: CustomerInput!): Customer
+}

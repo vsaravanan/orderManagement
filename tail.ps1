@@ -1,0 +1,1 @@
+Get-Content -Path "D:\opt\logs\govtech\bjb.log" -Wait

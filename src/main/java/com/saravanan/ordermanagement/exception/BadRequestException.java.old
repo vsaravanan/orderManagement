@@ -1,0 +1,14 @@
+package com.saravanan.ordermanagement.exception;
+
+/**
+ * @author Sarav on 14 Jul 2025
+ * @project govtech
+ * @package com.saravanan.ordermanagement.exception
+ * @class BadRequestException
+ */
+
+public class BadRequestException extends RuntimeException {
+    public BadRequestException(String message) {
+        super(message);
+    }
+}

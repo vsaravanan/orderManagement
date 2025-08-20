@@ -1,0 +1,62 @@
+spring.output.ansi.enabled: always
+spring:
+  datasource:
+    url: jdbc:h2:mem:ordersdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+#      hibernate.use_sql_comments: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+spring-doc:
+  packages-to-scan: com.saravanan.ordermanagement.controller, com.saravanan.ordermanagement.model
+
+spring.graphql.graphiql.enabled: true
+server.error.whitelabel.enabled: false
+server.error.include-stacktrace: always
+server.error.include-message: always
+spring.mvc.format.date: iso
+spring.mvc.format.date-time: iso
+spring.mvc.format.time: iso
+spring.jackson.date-format: yyyy-MM-dd HH:mm:ss
+
+dirLog: /opt/logs/govtech
+
+spring.main.banner-mode: off
+
+logging:
+  file.clean-history-on-start: true
+  pattern.console: "%M - %msg%n"
+  pattern.file: "%msg%n"
+
+  path: ${dirLog}
+  file.name: ${dirLog}/bjb.log
+  #  file.clean-history-on-start: true
+  pattern.rolling-file-name: ${dirLog}/%d{yyyyMMdd}/bjb.%d{yyyyMMdd}.%i.log.gz
+#  pattern.console: "%d{yyyy-MM-dd HH:mm:ss} | [%thread] | %-5level | %logger{36}.%M - %msg%n"
+#  pattern.file: "%d{yyyy-MM-dd HH:mm:ss} | [%thread] | %-5level | %logger{36}.%M - %msg%n"
+  file.max-size: 100MB
+  #  file.total-size-cap: 2MB
+  file.max-history: 15
+  level:
+#    web: TRACE
+    com.saravanan.ordermanagement: debug
+#    org.hibernate.SQL: debug
+#    org.hibernate.orm.jdbc.bind: TRACE
+    org.springframework.web: INFO
+    # org.springframework: trace
+    #org.hibernate.type: trace
+    root: info
+

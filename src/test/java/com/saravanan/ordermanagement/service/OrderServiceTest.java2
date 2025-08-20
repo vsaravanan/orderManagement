@@ -1,0 +1,112 @@
+package com.saravanan.ordermanagement.service;
+
+import com.saravanan.ordermanagement.mapper.OrderItemMapper;
+import com.saravanan.ordermanagement.model.Customer;
+import com.saravanan.ordermanagement.model.Order;
+import com.saravanan.ordermanagement.model.OrderItem;
+import com.saravanan.ordermanagement.repository.CustomerRepository;
+import com.saravanan.ordermanagement.repository.OrderRepository;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.openapitools.model.OrderItemData;
+import org.openapitools.model.OrderInput;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+/**
+ * @author Sarav on 14 Jul 2025
+ * @project govtech
+ * @package com.saravanan.ordermanagement.service
+ * @class OrderServiceTest
+ */
+
+@ExtendWith(MockitoExtension.class)
+class OrderServiceTest {
+
+    @Mock
+    private OrderRepository orderRepository;
+
+    @Mock
+    private CustomerRepository customerRepository;
+
+    @InjectMocks
+    private OrderService orderService;
+
+    @Test
+    void testCreateOrder_Success() {
+        List<OrderItem> orderItems = List.of(
+                new OrderItem(1L, "P123", 2, BigDecimal.valueOf(20)),
+                new OrderItem(2L, "P456", 1, BigDecimal.valueOf(60)));
+
+        List<OrderItemData> listOrderItemsDto = orderItems.stream().map(OrderItemMapper::toDto).collect(Collectors.toList());
+
+        OrderRequest request = new OrderRequest();
+        request.setCustomerId(1L);
+        request.setItems(listOrderItemsDto);
+
+        Customer mockCustomer = new Customer();
+        mockCustomer.setId(1L);
+        when(customerRepository.findById(1L)).thenReturn(Optional.of(mockCustomer));
+
+        Order order = new Order();
+        order.setId(10L);
+        order.setCustomer(mockCustomer);
+        order.setStatus("NEW");
+        order.setItems(orderItems);
+
+
+        when(orderRepository.saveAndFlush(any(Order.class))).thenReturn(order);
+
+        Order created = orderService.createOrder(request);
+
+        assertNotNull(created);
+        assertEquals("NEW", created.getStatus());
+        assertEquals(BigDecimal.valueOf(100), created.getTotalAmount());
+    }
+
+    @Test
+    void testGetOrderById_Found() {
+        Order order = new Order();
+        order.setId(1L);
+
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+
+        Order result = orderService.getOrderById(1L);
+        assertEquals(1L, result.getId());
+    }
+
+    @Test
+    void testCancelOrder_Success() {
+        Order order = new Order();
+        order.setId(1L);
+        order.setStatus("NEW");
+
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+
+        orderService.cancelOrder(1L);
+
+        assertEquals("CANCELLED", order.getStatus());
+        verify(orderRepository).saveAndFlush(order);
+    }
+
+    @Test
+    void testGetOrdersByCustomerId_ReturnsList() {
+        List<Order> mockOrders = List.of(new Order(), new Order());
+        when(orderRepository.findByCustomerId(457L)).thenReturn(mockOrders);
+
+        List<Order> orders = orderService.getOrdersByCustomerId(457L);
+        assertEquals(2, orders.size());
+    }
+}

@@ -1,0 +1,103 @@
+package com.saravanan.ordermanagement.controller;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.saravanan.ordermanagement.mapper.OrderItemMapper;
+import com.saravanan.ordermanagement.model.Order;
+import com.saravanan.ordermanagement.model.OrderItem;
+import com.saravanan.ordermanagement.service.OrderService;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.openapitools.model.OrderInput;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+/**
+ * @author Sarav on 14 Jul 2025
+ * @project govtech
+ * @package com.saravanan.ordermanagement.controller
+ * @class OrderApiControllerTest
+ */
+@WebMvcTest(OrderApiController.class)
+@ExtendWith(MockitoExtension.class)
+@Disabled
+public class OrderApiControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+
+    @MockitoBean
+    private OrderService orderService;
+
+
+    @Test
+    @Disabled
+    void testCreateOrder_ReturnsCreated() throws Exception {
+        OrderRequest request = new OrderRequest();
+        request.setCustomerId(1L);
+        request.setTotalAmount(BigDecimal.valueOf(100));
+        request.setItems(List.of(
+                OrderItemMapper.toDto(new OrderItem(1L, "P123", 2, BigDecimal.valueOf(20))),
+                OrderItemMapper.toDto(new OrderItem(2L, "P456", 1, BigDecimal.valueOf(60)))
+        ));
+
+        Order mockOrder = new Order();
+        mockOrder.setId(10L);
+        mockOrder.setStatus("NEW");
+        mockOrder.setCreatedAt(LocalDateTime.now());
+
+        when(orderService.createOrder(any())).thenReturn(mockOrder);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/orders")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(request)))
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    @Disabled
+    void testGetOrderById_ReturnsOk() throws Exception {
+        Order mockOrder = new Order();
+        mockOrder.setId(1L);
+
+        when(orderService.getOrderById(1L)).thenReturn(mockOrder);
+
+        mockMvc.perform(get("/api/orders/1"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @Disabled
+    void testDeleteOrder_ReturnsNoContent() throws Exception {
+        doNothing().when(orderService).cancelOrder(1L);
+
+        mockMvc.perform(delete("/api/orders/1"))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @Disabled
+    void testGetOrdersByCustomerId_ReturnsOk() throws Exception {
+        when(orderService.getOrdersByCustomerId(1L)).thenReturn(List.of(new Order(), new Order()));
+
+        mockMvc.perform(get("/api/customers/1/orders"))
+                .andExpect(status().isOk());
+    }
+}

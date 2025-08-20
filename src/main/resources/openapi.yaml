@@ -1,0 +1,208 @@
+openapi: 3.0.1
+info:
+  title: Order Management API
+  version: 1.0.0
+paths:
+  /api/orders:
+    post:
+      operationId: createOrder
+      tags: [Order]
+      summary: Create a new order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderInput'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderData'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/orders/{orderId}:
+    get:
+      operationId: getOrderById
+      tags: [Order]
+      summary: Get order by ID
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: long
+      responses:
+        '200':
+          description: OK
+    delete:
+      operationId: cancelOrder
+      tags: [Order]
+      summary: Cancel order
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: long
+      responses:
+        '204':
+          description: No Content
+  /api/customers/{customerId}/orders:
+    get:
+      operationId: listOrdersByCustomer
+      tags: [Order]
+      summary: List orders by customer
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: long
+      responses:
+        '200':
+          description: OK
+
+
+  /api/customer:
+    post:
+      operationId: createCustomer
+      tags: [ Customer ]
+      summary: Create a new customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerInput'
+      responses:
+        '201':
+          description: Customer created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerData'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+
+components:
+  schemas:
+
+
+
+    CustomerInput:
+      type: object
+      required:
+        - name
+        - email
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+
+
+    CustomerData:
+      type: object
+      properties:
+        customerId:
+          type: long
+      allOf:
+        - $ref: '#/components/schemas/CustomerInput'
+        - type: object
+
+
+
+    OrderInput:
+      type: object
+      required:
+        - customerId
+        - items
+      properties:
+        customerId:
+          type: integer
+          format: int64
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItemInput'
+
+    OrderData:
+      type: object
+      properties:
+        orderId:
+          type: long
+        customerId:
+          type: long
+        status:
+          type: string
+        totalAmount:
+          type: number
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItemData'
+        createdAt:
+          type: string
+          format: date-time
+
+
+
+
+
+
+    OrderItemInput:
+      type: object
+      required:
+        - productId
+        - quantity
+        - price
+      properties:
+        productId:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+          minimum: 1
+        price:
+          type: number
+          format: decimal
+          minimum: 0.0
+
+
+    OrderItemData:
+      type: object
+      properties:
+        itemId: { type: long}
+      allOf:
+        - $ref: '#/components/schemas/OrderItemInput'
+        - type: object
+
+
+
+
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+

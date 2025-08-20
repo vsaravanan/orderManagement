@@ -1,7 +1,6 @@
 package com.saravanan.ordermanagement.controller;
 
 
-import com.saravanan.ordermanagement.mapper.OrderItemMapper;
 import com.saravanan.ordermanagement.mapper.OrderMapper;
 import com.saravanan.ordermanagement.model.Order;
 import com.saravanan.ordermanagement.service.OrderService;
@@ -14,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.stream.Collectors;
+import java.util.List;
 
 /**
  * @author Sarav on 14 Jul 2025
@@ -45,4 +44,37 @@ public class OrderApiController implements OrderApi {
                 .header("X-Custom-Header", "value")
                 .body(orderData);
     }
+
+
+
+    public ResponseEntity<OrderData> getOrderById(Long orderId) {
+        Order order = orderService.getOrderById(orderId);
+        OrderData orderData = OrderMapper.toData(order);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .header("X-Custom-Header", "value")
+                .body(orderData);
+    }
+
+
+
+    public ResponseEntity<String> cancelOrder(Long orderId) {
+        orderService.cancelOrder(orderId);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT)
+                .header("X-Custom-Header", "value")
+                .body("deleted order id " + orderId);
+    }
+
+    public ResponseEntity<List<OrderData>> listOrdersByCustomer(Long customerId) {
+        List<Order> orders = orderService.getOrdersByCustomerId(customerId);
+
+        List<OrderData> orderDataList = orders.stream().map(OrderMapper::toData).toList();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .header("X-Custom-Header", "value")
+                .body(orderDataList);
+    }
+
 }

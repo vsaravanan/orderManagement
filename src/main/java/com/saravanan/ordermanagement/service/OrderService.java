@@ -86,24 +86,34 @@ public class OrderService {
         return orderRepo.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
     }
 
-    public void cancelOrder(Long orderId) {
-        Order order = getOrderById(orderId);
-        order.setStatus("CANCELLED");
-        orderRepo.saveAndFlush(order);
-    }
 
-    public List<OrderData> getOrdersByCustomerId(Long customerId) {
+
+    public List<Order> getOrdersByCustomerId(Long customerId) {
+
+//        Customer customer = customerRepo.findById(customerId)
+//                .orElseThrow(() -> new RuntimeException("Customer not found"));
+
         List<Order> orders = orderRepo.findByCustomerCustomerId(customerId);
 
-        List<OrderData> orderDataList = orders.stream().map(order -> {
-            OrderData orderData = OrderMapper.toData(order);
-            orderData.setCustomerId(order.getCustomer().getCustomerId());
-            orderData.setItems(order.getItems().stream().map(OrderItemMapper::toData).collect(Collectors.toList()));
 
-            return orderData;
-        }).toList();
+//
+//        List<OrderData> orderDataList = orders.stream().map(order -> {
+//            OrderData orderData = OrderMapper.toData(order);
+//            orderData.setCustomerId(customer.getCustomerId());
+//
+//            return orderData;
+//        }).toList();
 
-        return orderDataList;
+        return orders;
 
+    }
+
+    public void cancelOrder(Long orderId) {
+        Order order = getOrderById(orderId);
+        if (order.getStatus().equals("CANCELLED")) {
+            throw new RuntimeException("Order id " + orderId + " already cancelled" );
+        }
+        order.setStatus("CANCELLED");
+        orderRepo.saveAndFlush(order);
     }
 }

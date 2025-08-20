@@ -4,7 +4,6 @@ package com.saravanan.ordermanagement.resolver;
 import com.saravanan.ordermanagement.model.Order;
 import com.saravanan.ordermanagement.service.CustomerService;
 import com.saravanan.ordermanagement.service.OrderService;
-import org.openapitools.model.OrderData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -33,7 +32,7 @@ public class GraphqlResolver {
     }
 
     @QueryMapping
-    public List<OrderData> getOrdersByCustomer(@Argument Long customerId) {
+    public List<Order> getOrdersByCustomer(@Argument Long customerId) {
         return orderService.getOrdersByCustomerId(customerId);
     }
 

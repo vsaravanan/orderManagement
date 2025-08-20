@@ -10,7 +10,7 @@ type Customer {
 
 type Order {
   orderId: ID!
-  customerId: Customer
+  customerId: ID!
   items: [OrderItem!]!
   totalAmount: Float
   status: String

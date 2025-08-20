@@ -41,6 +41,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderData'
     delete:
       operationId: cancelOrder
       tags: [Order]
@@ -54,6 +58,10 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                type: string
   /api/customers/{customerId}/orders:
     get:
       operationId: listOrdersByCustomer
@@ -68,8 +76,12 @@ paths:
       responses:
         '200':
           description: OK
-
-
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderData'
   /api/customer:
     post:
       operationId: createCustomer

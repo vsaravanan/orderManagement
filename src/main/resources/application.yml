@@ -19,6 +19,14 @@ spring:
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  graphql:
+    cors:
+      allowedOriginPatterns : "*"
+      allowed-methods: "*"
+      allowed-headers: "*"
+      allow-credentials: true
+      max-age: 3600
+
 
 spring-doc:
   packages-to-scan: com.saravanan.ordermanagement.controller, com.saravanan.ordermanagement.model
@@ -60,3 +68,20 @@ logging:
     #org.hibernate.type: trace
     root: info
 
+
+
+#cors:
+#  config:
+#    enabled: true
+#    # Specify allowed headers, like 'x-allowed-header'.
+#    allowedHeaders: ['*']
+#    # Specify allowed request methods, specify ['*'] to allow all possible ones.
+#    allowedMethods: ['*']
+#    # Configure requests allowed from specific origins.
+#    allowedOrigins: ['*']
+#    # Sets the Access-Control-Expose-Headers header.
+#    exposedHeaders: true
+#    # Sets the Access-Control-Max-Age header.
+#    maxAge: 1728000
+#    # Sets the Access-Control-Allow-Credentials header.
+#    supportsCredentials: true

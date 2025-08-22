@@ -40,4 +40,8 @@ public class CustomerService {
         log.info("Added order {} to Customer {} ", order, savedCustomer);
         return savedCustomer;
     }
+
+    public Customer getCustomerById(Long customerId) {
+        return customerRepo.findById(customerId).orElseThrow( () -> new RuntimeException("Customer not found"));
+    }
 }

@@ -33,11 +33,15 @@ public class Order {
     }
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JoinColumn(name = "customerId", nullable = false)
     private Customer customer;
+
+    public Long getCustomerId() {
+        return customer != null ? customer.getCustomerId() : null;
+    }
 
     private BigDecimal totalAmount;
     private String status;

@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36b23e07-7b85-49c1-8b48-0a31062bb3c4" name="Changes" comment="first">
+    <list default="true" id="36b23e07-7b85-49c1-8b48-0a31062bb3c4" name="Changes" comment="second step">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/saravanan/ordermanagement/controller/OrderApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/saravanan/ordermanagement/controller/OrderApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/saravanan/ordermanagement/model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/saravanan/ordermanagement/model/Order.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/saravanan/ordermanagement/resolver/GraphqlResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/saravanan/ordermanagement/resolver/GraphqlResolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/saravanan/ordermanagement/resolver/OrderMutationResolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/saravanan/ordermanagement/resolver/OrderMutationResolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/saravanan/ordermanagement/service/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/saravanan/ordermanagement/service/CustomerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/saravanan/ordermanagement/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/saravanan/ordermanagement/service/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/graphql/schema.graphqls" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/graphql/schema.graphqls" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/openapi.yaml" afterDir="false" />
     </list>
@@ -20,18 +23,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "vsaravanan"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;vsaravanan&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "git@github.com:vsaravanan/orderManagement.git",
-    "accountId": "c6f49308-01fa-4f13-9edb-fbda66eb0f02"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:vsaravanan/orderManagement.git&quot;,
+    &quot;accountId&quot;: &quot;c6f49308-01fa-4f13-9edb-fbda66eb0f02&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenRunner">
     <option name="skipTests" value="true" />
   </component>
@@ -71,7 +74,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/practice/java/BJB/ordermanagement",
+    "last_opened_file_path": "D:/practice/java/BJB/ordermanagement/src/main/resources",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.46642134",
@@ -80,7 +83,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\practice\java\BJB\ordermanagement\src\main\resources" />
       <recent name="D:\practice\java\BJB\ordermanagement" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\practice\java\BJB\ordermanagement\src\main\resources" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -106,7 +113,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755705942623</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="second step">
+      <option name="closed" value="true" />
+      <created>1755711516159</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1755711516159</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -122,7 +137,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first" />
-    <option name="LAST_COMMIT_MESSAGE" value="first" />
+    <MESSAGE value="second step" />
+    <option name="LAST_COMMIT_MESSAGE" value="second step" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -136,6 +152,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/saravanan/ordermanagement/mapper/OrderMapper.java</url>
           <line>51</line>
           <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/saravanan/ordermanagement/service/OrderService.java</url>
+          <line>86</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

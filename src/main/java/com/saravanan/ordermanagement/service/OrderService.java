@@ -83,7 +83,8 @@ public class OrderService {
 //    }
 
     public Order getOrderById(Long orderId) {
-        return orderRepo.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
+        Order order = orderRepo.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
+        return order;
     }
 
 

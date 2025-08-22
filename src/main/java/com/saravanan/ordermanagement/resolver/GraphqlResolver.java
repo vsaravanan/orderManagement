@@ -1,6 +1,7 @@
 package com.saravanan.ordermanagement.resolver;
 
 
+import com.saravanan.ordermanagement.model.Customer;
 import com.saravanan.ordermanagement.model.Order;
 import com.saravanan.ordermanagement.service.CustomerService;
 import com.saravanan.ordermanagement.service.OrderService;
@@ -29,6 +30,11 @@ public class GraphqlResolver {
     @QueryMapping
     public Order getOrder(@Argument Long orderId) {
         return orderService.getOrderById(orderId);
+    }
+
+    @QueryMapping
+    public Customer getCustomer(@Argument Long customerId) {
+        return customerService.getCustomerById(customerId);
     }
 
     @QueryMapping
